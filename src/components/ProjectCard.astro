@@ -2,12 +2,18 @@
 interface Props {
   title: string;
   description: string;
+  index: number;
 }
 
-const { title, description } = Astro.props;
+const { title, description, index } = Astro.props;
 ---
 
 <article class="project-card">
+  <div class="project-meta">
+    <span>project_{String(index + 1).padStart(2, "0")}</span>
+    <span aria-hidden="true">[ directory ]</span>
+  </div>
   <h3>{title}</h3>
   <p>{description}</p>
+  <span class="project-end" aria-hidden="true">// end of entry</span>
 </article>

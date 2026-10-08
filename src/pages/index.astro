@@ -3,40 +3,126 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import ProjectCard from "../components/ProjectCard.astro";
-import { projects } from "../data/project";
+import { projects } from "../data/projects";
+
 ---
 
 <BaseLayout>
   <Header />
 
-  <main>
-    <section id="about">
-      <p class="label">Software · Embedded Systems · Robotics</p>
-      <h1>Hi, I'm Paing Myo Thaw.</h1>
-      <p>
-        I am a Computer Science student interested in building
-        intelligent robotic systems.
-      </p>
-    </section>
-
-    <section id="projects">
-      <h2>My projects</h2>
-
-      <div class="projects">
-        {projects.map((project) => (
-          <ProjectCard
-            title={project.title}
-            description={project.description}
-          />
-        ))}
+  <main id="main-content" class="container" tabindex="-1">
+    <div class="terminal-window">
+      <div class="terminal-titlebar">
+        <div class="window-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+        <span>paing@robo: ~</span>
+        <span class="terminal-shell">bash</span>
       </div>
-    </section>
 
-    <section id="contact">
-      <h2>Contact</h2>
-      <a href="mailto:paingmyothaw04328@gmail.com">Email me</a>
-      <a href="https://github.com/PaingMyoThaw">GitHub</a>
-    </section>
+      <div class="terminal-content">
+        <section id="about" class="hero">
+          <div class="hero-copy">
+            <p class="session-label"><span class="status-dot" aria-hidden="true"></span> Welcome to my corner of the internet</p>
+            <p class="command"><span class="prompt">paing@robo</span><span class="command-path">:~$</span> whoami</p>
+            <h1>Hi, I'm<br /><span class="hero-name">Paing Myo Thaw.</span><span class="cursor" aria-hidden="true"></span></h1>
+            <p class="eyebrow">Autonomous / Embedded systems / Robotics</p>
+
+            <p class="hero-description">
+              Computing Science undergraduate with a Diploma in Electrical &amp; Electronic Engineering,
+              specializing in Robotics and Control during the final year of the diploma. Strong interest in robotics, embedded systems,
+              machine learning and artificial intelligence. Experienced with C/C++, Python, Linux, ROS 2 and embedded
+              development through academic and personal projects. Interested in developing intelligent robotic systems by combining software, electronics and AI.
+            </p>
+
+            <div class="hero-actions">
+              <a class="button button-primary" href="#projects"><span aria-hidden="true">./</span>explore_projects <span aria-hidden="true">↗</span></a>
+              <a class="button button-secondary" href="https://github.com/PaingMyoThaw"><span aria-hidden="true">&gt;</span> View GitHub</a>
+            </div>
+          </div>
+
+          <aside class="hero-visual" aria-label="Technical profile">
+            <div class="panel-title"><span aria-hidden="true">&gt;_</span> profile.sh <span class="panel-mode">read only</span></div>
+            <div class="profile-output">
+              <figure class="linux-terminal" role="img" aria-label="Linux terminal showing shell commands and portfolio folders">
+                <div class="linux-terminal-titlebar">
+                  <div class="window-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+                  <span>paing@linux: ~</span>
+                </div>
+                <div class="linux-terminal-screen" aria-hidden="true">
+                  <p class="linux-terminal-line"><span class="prompt">paing@linux:~$</span> uname -s</p>
+                  <p class="linux-terminal-output">Linux</p>
+                  <p class="linux-terminal-line"><span class="prompt">paing@linux:~$</span> pwd</p>
+                  <p class="linux-terminal-output">/home/paing</p>
+                  <p class="linux-terminal-line"><span class="prompt">paing@linux:~$</span> ls ~/portfolio</p>
+                  <p class="linux-terminal-folders"><span>about/</span><span>projects/</span><span>skills/</span></p>
+                  <p class="linux-terminal-line"><span class="prompt">paing@linux:~$</span> <span class="cursor" aria-hidden="true"></span></p>
+                </div>
+              </figure>
+              <p class="profile-name">paing@robo</p>
+              <div class="profile-rule" aria-hidden="true">------------------------</div>
+              <dl class="profile-details">
+                <div><dt>Focus</dt><dd>Intelligent robotics</dd></div>
+                <div><dt>Stack</dt><dd>C/C++ · Python · ROS 2</dd></div>
+                <div><dt>Tools</dt><dd>Linux · Git · Webots</dd></div>
+                <div><dt>Approach</dt><dd>Build. Test. Improve.</dd></div>
+              </dl>
+              <div class="terminal-palette" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+            </div>
+            <div class="visual-caption"><span class="status-dot" aria-hidden="true"></span> Hardware meets software</div>
+          </aside>
+        </section>
+
+        <section id="projects">
+          <div class="section-heading">
+            <p class="command"><span class="prompt">paing@robo</span><span class="command-path">:~$</span> ls ./projects</p>
+            <div class="heading-row"><h2>Selected projects<span class="accent">/</span></h2><span class="entry-count">{String(projects.length).padStart(2, "0")} entries</span></div>
+            <p>Exploring software development and physical systems.</p>
+          </div>
+          <div class="projects">
+            {projects.map((project, index) => (
+              <ProjectCard title={project.title} description={project.description} index={index} />
+            ))}
+          </div>
+        </section>
+
+        <section id="skills">
+          <div class="section-heading">
+            <p class="command"><span class="prompt">paing@robo</span><span class="command-path">:~$</span> cat skills.conf</p>
+            <h2>My toolkit<span class="accent">_</span></h2>
+            <p>Technologies I work with, and ideas I keep exploring.</p>
+          </div>
+          <div class="skills-grid">
+            <article>
+              <p class="skill-label">[01] software</p>
+              <h3>Software</h3>
+              <p>Languages and tools used across my projects.</p>
+              <div class="tags"><span>C++</span><span>Python</span><span>Actix</span><span>HTML &amp; CSS</span><span>Git</span></div>
+            </article>
+            <article>
+              <p class="skill-label">[02] embedded</p>
+              <h3>Embedded systems</h3>
+              <p>Working with hardware, sensors, and microcontrollers.</p>
+              <div class="tags"><span>Raspberry Pi</span><span>Pico W</span><span>Arduino</span><span>Motor control</span></div>
+            </article>
+            <article>
+              <p class="skill-label">[03] robotics</p>
+              <h3>Robotics &amp; learning</h3>
+              <p>Areas I'm exploring and developing further.</p>
+              <div class="tags"><span>ROS 2</span><span>Webots</span><span>PID control</span><span>AI</span></div>
+            </article>
+          </div>
+        </section>
+
+        <section id="contact" class="contact-section">
+          <div>
+            <p class="command"><span class="prompt">paing@robo</span><span class="command-path">:~$</span> ./connect</p>
+            <h2>Let's build something useful<span class="accent">.</span></h2>
+            <p>Interested in my projects or discussing an opportunity? Connect with me on GitHub.</p>
+          </div>
+          <a class="button button-primary" href="https://github.com/PaingMyoThaw">Find me on GitHub <span aria-hidden="true">↗</span></a>
+        </section>
+      </div>
+      <div class="terminal-statusbar"><span><span class="status-dot" aria-hidden="true"></span> portfolio / main</span><span>Thanks for stopping by.</span></div>
+    </div>
   </main>
 
   <Footer />
