@@ -17,39 +17,73 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    slug: "embedded-motion-control-robot",
-    title: "Embedded Motion Control Robot",
+    slug: "usb-mouse-tracking-driver",
+    title: "USB Mouse Movement Tracking Driver",
+    demo: {
+      src: "videos/usb-mouse-tracking-demo.mp4",
+      poster: "videos/usb-mouse-tracking-demo-poster.jpg",
+      caption: "A demonstration of USB mouse activity tracking on Raspberry Pi OS.",
+    },
     description:
-      "A project exploring motor control, encoder feedback, and PID.",
-    technologies: ["Motor control", "Encoders", "PID control"],
+      "Co-developed a Linux kernel driver on Raspberry Pi 4 to track USB mouse movement and clicks, with a command-line application and live web dashboard. My contribution focused on the Makefile, build system, and module loading workflow.",
+    technologies: ["C", "Linux kernel", "Raspberry Pi OS", "GNU Make", "Bash", "Python"],
     facts: [
-      { label: "Area", value: "Embedded systems & robotics" },
-      { label: "Focus", value: "Robot motion control" },
+      { label: "Type", value: "Academic team project" },
+      { label: "Team", value: "5 contributors" },
+      { label: "Platform", value: "Raspberry Pi 4 / Raspberry Pi OS" },
+      { label: "My role", value: "Makefile, build system & module loading" },
     ],
     sections: [
       {
         id: "overview",
         title: "Project overview",
         paragraphs: [
-          "This project explores how motor control, encoder feedback, and PID can work together to control a robot's motion. The focus is on the relationship between a motor command, the measured response, and the adjustments needed to reach a target.",
+          "Developed for CSC1107 Operating Systems, this project implements a Linux loadable kernel module that tracks USB mouse activity on a Raspberry Pi 4. It records cumulative X and Y movement, left, right, and middle clicks, and the total number of input events.",
+          "The project connects hardware input, kernel-space event handling, a character device, and user-space applications in one pipeline. A terminal application and a browser dashboard provide two ways to inspect the collected statistics.",
         ],
       },
       {
-        id: "control-loop",
-        title: "Understanding the control loop",
-        paragraphs: [
-          "A closed-loop controller compares a target with feedback from the system. Encoders provide information about motor motion, allowing the controller to calculate the difference between the requested and measured response.",
-          "PID control uses that error to adjust the motor command. The proportional term responds to the current error, the integral term accounts for accumulated error, and the derivative term responds to changes in error.",
-        ],
-      },
-      {
-        id: "key-concepts",
-        title: "Key concepts explored",
-        paragraphs: ["The project brings together three connected areas of motion control:"],
+        id: "features",
+        title: "System features",
+        paragraphs: ["The team built a complete workflow for tracking, viewing, and resetting mouse activity:"],
         bullets: [
-          "Motor control: translating a motion target into a motor command.",
-          "Encoder feedback: measuring motor motion rather than relying only on the command sent.",
-          "PID control: using feedback error to adjust the command over time.",
+          "A kernel input handler captures relative movement and mouse button presses through the Linux input subsystem.",
+          "The /dev/mouse_tracker character device exposes statistics and accepts a reset command.",
+          "A C application provides single-read, continuous watch, and reset modes.",
+          "Python programs stream statistics over HTTP JSON to a live browser dashboard.",
+          "A Makefile and Bash scripts support building, loading, testing, and cleaning up the project.",
+        ],
+      },
+      {
+        id: "contribution",
+        title: "My contribution",
+        paragraphs: [
+          "I handled the Makefile, build system, and module loading workflow. The build compiles both mouse_tracker.ko, the loadable kernel module, and mouse_tracker_app, the user-space C application.",
+          "The Makefile uses the running kernel's build directory for module compilation and GCC for the application. It also provides a clean target to remove generated artifacts, making rebuilding and testing more repeatable for the team.",
+        ],
+      },
+      {
+        id: "architecture",
+        title: "Technical architecture",
+        paragraphs: [
+          "The kernel module registers an input handler and a character device. The handler updates shared counters, while the character device lets user-space programs retrieve a snapshot or reset the statistics using standard file operations.",
+          "A spinlock protects the shared counters during event handling, reads, and resets. Data crosses the kernel/user-space boundary through copy_to_user() and copy_from_user(). Networking and display logic stay in user space, where a Python streamer sends the statistics to an HTTP server and browser dashboard.",
+        ],
+      },
+      {
+        id: "testing",
+        title: "Testing and results",
+        paragraphs: [
+          "Testing was carried out on a Raspberry Pi 4 Model B running 64-bit Raspberry Pi OS. The automated test suite reported 15 passing checks and zero failures, covering the build, module loading, device availability, reads, resets, watch mode, and cleanup.",
+          "Kernel logs verified mouse detection, device creation, device access, and reset handling. The dashboard was also checked against the device output while moving and clicking the mouse to confirm that the displayed values reflected live activity.",
+        ],
+      },
+      {
+        id: "learning",
+        title: "Challenges and learning",
+        paragraphs: [
+          "This project helped me connect operating systems theory with a practical Linux driver. I developed a clearer understanding of how device registration creates a /dev interface, why kernel and user-space data need explicit transfer functions, and how synchronization protects statistics shared by multiple execution contexts.",
+          "I also learned the importance of resource cleanup when a module is unloaded. The current implementation aggregates activity across relative input devices, and its polling dashboard is intended for demonstration. Per-device tracking, configurable device permissions, and authenticated streaming are possible areas for further development.",
         ],
       },
     ],

@@ -207,7 +207,7 @@ article .skill-label { margin-bottom: 20px; color: var(--accent); font-size: 10p
 .project-demo { padding-block: 36px; border-bottom: 1px solid var(--border); }
 .project-demo .eyebrow { margin-bottom: 12px; }
 .project-demo figure { margin: 24px 0 0; }
-.project-demo-video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; border: 1px solid var(--border); border-radius: 5px; background: var(--surface-deep); object-fit: contain; }
+.project-demo-video { display: block; width: 100%; height: auto; aspect-ratio: auto 16 / 9; border: 1px solid var(--border); border-radius: 5px; background: var(--surface-deep); object-fit: contain; }
 .project-demo-video:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
 .project-demo figcaption { margin-top: 12px; color: var(--muted); font-size: 12px; }
 .project-detail-layout { display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 48px; }
