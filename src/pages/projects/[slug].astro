@@ -41,6 +41,29 @@ const projectNumber = String(index + 1).padStart(2, "0");
           <p class="project-lead">{project.description}</p>
         </div>
 
+        {project.demo && (
+          <section id="demo" class="project-demo" aria-labelledby="demo-heading">
+            <p class="eyebrow">Demo / Screen recording</p>
+            <h2 id="demo-heading">See it in action</h2>
+            <figure>
+              <video
+                class="project-demo-video"
+                controls
+                muted
+                playsinline
+                preload="metadata"
+                poster={sitePath(project.demo.poster)}
+                aria-label={`${project.title} demo`}
+              >
+                <source src={sitePath(project.demo.src)} type="video/mp4" />
+                Your browser does not support embedded video.
+                <a href={sitePath(project.demo.src)}>Download the demo video</a>.
+              </video>
+              <figcaption>{project.demo.caption}</figcaption>
+            </figure>
+          </section>
+        )}
+
         <div class="project-detail-layout">
           <div class="project-body">
             {project.sections.map((section, sectionIndex) => (
@@ -65,6 +88,7 @@ const projectNumber = String(index + 1).padStart(2, "0");
             <nav class="project-contents" aria-label="On this page">
               <h2 class="sidebar-heading">On this page</h2>
               <ol>
+                {project.demo && <li><a href="#demo">Project demo</a></li>}
                 {project.sections.map((section) => <li><a href={`#${section.id}`}>{section.title}</a></li>)}
               </ol>
             </nav>

@@ -11,6 +11,7 @@ export interface Project {
   description: string;
   technologies: string[];
   facts: { label: string; value: string }[];
+  demo?: { src: string; poster: string; caption: string };
   sections: ProjectSection[];
 }
 
@@ -56,6 +57,11 @@ export const projects: Project[] = [
   {
     slug: "patient-management-system",
     title: "Patient Management System",
+    demo: {
+      src: "videos/patient-management-demo.mp4",
+      poster: "videos/patient-management-demo-poster.jpg",
+      caption: "A walkthrough of the Patient Management System.",
+    },
     description:
       "Co-developed a clinic management system using Rust, Actix Web, and MariaDB, integrating appointments, patient records, prescriptions, and billing. My contribution focused on medical records management and printable patient reports combining clinical notes, prescriptions, appointment history, and outstanding balances.",
     technologies: ["Rust", "Actix Web", "MariaDB", "SQLx", "Tera", "HTML & CSS"],
