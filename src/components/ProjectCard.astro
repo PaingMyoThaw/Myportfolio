@@ -1,11 +1,14 @@
 ---
+import { sitePath } from "../utils/paths";
+
 interface Props {
+  slug: string;
   title: string;
   description: string;
   index: number;
 }
 
-const { title, description, index } = Astro.props;
+const { slug, title, description, index } = Astro.props;
 ---
 
 <article class="project-card">
@@ -15,5 +18,13 @@ const { title, description, index } = Astro.props;
   </div>
   <h3>{title}</h3>
   <p>{description}</p>
-  <span class="project-end" aria-hidden="true">// end of entry</span>
+  <div class="project-card-actions">
+    <a
+      class="button button-secondary"
+      href={sitePath(`projects/${slug}/`)}
+      aria-label={`View ${title} project details`}
+    >
+      View project <span aria-hidden="true">&rarr;</span>
+    </a>
+  </div>
 </article>

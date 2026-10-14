@@ -79,7 +79,7 @@ import { projects } from "../data/projects";
           </div>
           <div class="projects">
             {projects.map((project, index) => (
-              <ProjectCard title={project.title} description={project.description} index={index} />
+              <ProjectCard slug={project.slug} title={project.title} description={project.description} index={index} />
             ))}
           </div>
         </section>

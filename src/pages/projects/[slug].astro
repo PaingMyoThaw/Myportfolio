@@ -1,0 +1,84 @@
+---
+import type { GetStaticPaths } from "astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { projects, type Project } from "../../data/projects";
+import { sitePath } from "../../utils/paths";
+
+export const getStaticPaths = (() =>
+  projects.map((project, index) => ({
+    params: { slug: project.slug },
+    props: { project, index },
+  }))) satisfies GetStaticPaths;
+
+interface Props {
+  project: Project;
+  index: number;
+}
+
+const { project, index } = Astro.props;
+const projectNumber = String(index + 1).padStart(2, "0");
+---
+
+<BaseLayout title={`${project.title} | Paing Myo Thaw`} description={project.description}>
+  <Header homeLinks />
+
+  <main id="main-content" class="container" tabindex="-1">
+    <div class="terminal-window">
+      <div class="terminal-titlebar">
+        <div class="window-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+        <span>project_{projectNumber} / README.md</span>
+        <span class="terminal-shell">bash</span>
+      </div>
+
+      <div class="terminal-content">
+        <div class="project-intro">
+          <a class="project-back" href={`${sitePath()}#projects`}><span aria-hidden="true">&larr;</span> Back to projects</a>
+          <p class="command"><span class="prompt">paing@robo</span><span class="command-path">:~$</span> cat projects/{project.slug}/README.md</p>
+          <p class="eyebrow">Project {projectNumber} / Case study</p>
+          <h1 class="project-title">{project.title}<span class="accent">.</span></h1>
+          <p class="project-lead">{project.description}</p>
+        </div>
+
+        <div class="project-detail-layout">
+          <div class="project-body">
+            {project.sections.map((section, sectionIndex) => (
+              <section id={section.id} class="project-detail-section" aria-labelledby={`${section.id}-heading`}>
+                <p class="eyebrow">{String(sectionIndex + 1).padStart(2, "0")} / {section.id}</p>
+                <h2 id={`${section.id}-heading`}>{section.title}</h2>
+                {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+                {section.bullets && <ul>{section.bullets.map((bullet) => <li>{bullet}</li>)}</ul>}
+              </section>
+            ))}
+          </div>
+
+          <aside class="project-sidebar" aria-label="Project summary">
+            <div class="project-summary">
+              <p class="eyebrow">Project notes</p>
+              <dl class="project-facts">
+                {project.facts.map((fact) => <div><dt>{fact.label}</dt><dd>{fact.value}</dd></div>)}
+              </dl>
+              <h2 class="sidebar-heading">Tools &amp; concepts</h2>
+              <div class="tags">{project.technologies.map((technology) => <span>{technology}</span>)}</div>
+            </div>
+            <nav class="project-contents" aria-label="On this page">
+              <h2 class="sidebar-heading">On this page</h2>
+              <ol>
+                {project.sections.map((section) => <li><a href={`#${section.id}`}>{section.title}</a></li>)}
+              </ol>
+            </nav>
+          </aside>
+        </div>
+
+        <div class="project-bottom-nav">
+          <a class="button button-secondary" href={`${sitePath()}#projects`}><span aria-hidden="true">&larr;</span> Back to all projects</a>
+        </div>
+      </div>
+
+      <div class="terminal-statusbar"><span><span class="status-dot" aria-hidden="true"></span> project_{projectNumber} / README.md</span><span>Thanks for reading.</span></div>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
