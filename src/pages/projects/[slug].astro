@@ -41,6 +41,28 @@ const projectNumber = String(index + 1).padStart(2, "0");
           <p class="project-lead">{project.description}</p>
         </div>
 
+        {project.images && (
+          <section id="gallery" class="project-gallery-section" aria-labelledby="gallery-heading">
+            <p class="eyebrow">Gallery / Project snapshots</p>
+            <h2 id="gallery-heading">The project in pictures</h2>
+            <div class="project-gallery">
+              {project.images.map((image) => (
+                <figure>
+                  <img
+                    src={sitePath(image.src)}
+                    alt={image.alt}
+                    width={image.width}
+                    height={image.height}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <figcaption>{image.caption}</figcaption>
+                </figure>
+              ))}
+            </div>
+          </section>
+        )}
+
         {project.demo && (
           <section id="demo" class="project-demo" aria-labelledby="demo-heading">
             <p class="eyebrow">Demo / Screen recording</p>
@@ -89,6 +111,7 @@ const projectNumber = String(index + 1).padStart(2, "0");
               <h2 class="sidebar-heading">On this page</h2>
               <ol>
                 {project.demo && <li><a href="#demo">Project demo</a></li>}
+                {project.images && <li><a href="#gallery">Project gallery</a></li>}
                 {project.sections.map((section) => <li><a href={`#${section.id}`}>{section.title}</a></li>)}
               </ol>
             </nav>

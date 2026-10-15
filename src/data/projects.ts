@@ -12,6 +12,7 @@ export interface Project {
   technologies: string[];
   facts: { label: string; value: string }[];
   demo?: { src: string; poster: string; caption: string };
+  images?: { src: string; alt: string; caption: string; width: number; height: number }[];
   sections: ProjectSection[];
 }
 
@@ -215,6 +216,96 @@ export const projects: Project[] = [
         paragraphs: [
           "The project connected recursive algorithms with an interactive application. Implementing Minimax required careful handling of terminal states, turn alternation, and board restoration during search.",
           "Comparing difficulty levels also highlighted a design trade-off: a strategically strong opponent is useful for a challenge, while a deliberately imperfect opponent can make the game more approachable for beginners. Search depth provides one way to adjust both difficulty and computation.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "autonomous-mobile-robot-navigation",
+    title: "Autonomous Mobile Robot Navigation",
+    description:
+      "Co-developed a ROS-based autonomous navigation project using 2D LiDAR and an RGB-D camera. My work covered mapping, visual recognition, and navigation, combining SLAM, AMCL localization, path planning, and image-triggered robot actions.",
+    technologies: ["ROS", "C++", "RViz", "SLAM", "AMCL", "LiDAR", "RGB-D"],
+    facts: [
+      { label: "Type", value: "Academic team project" },
+      { label: "Team", value: "3 contributors" },
+      { label: "Platform", value: "Haigui mobile robot" },
+      { label: "My role", value: "Mapping, visual recognition & navigation" },
+    ],
+    images: [
+      {
+        src: "images/projects/autonomous-navigation/robot.jpg",
+        alt: "A mobile robot in a laboratory with visual markers and obstacles.",
+        caption: "The robot in the laboratory test environment.",
+        width: 768,
+        height: 480,
+      },
+      {
+        src: "images/projects/autonomous-navigation/occupancy-map.png",
+        alt: "An RViz occupancy map showing obstacles and colored costmap inflation layers.",
+        caption: "The occupancy map and obstacle inflation layers visualized in RViz.",
+        width: 582,
+        height: 497,
+      },
+      {
+        src: "images/projects/autonomous-navigation/trajectory.png",
+        alt: "A robot trajectory between points C, B, and A around two UR5 workstations and a teacher's table.",
+        caption: "The navigation trajectory documented in the project report.",
+        width: 1271,
+        height: 613,
+      },
+    ],
+    sections: [
+      {
+        id: "overview",
+        title: "Project overview",
+        paragraphs: [
+          "This project explores autonomous mobile robot navigation in a laboratory environment using the Haigui robot, a 2D LiDAR, and an RGB-D camera. ROS connects the sensors, mapping, localization, navigation, and visual recognition components.",
+          "The route starts at point C, passes through point B, and finishes at point A. The environment includes two UR5 workstations and a teacher's table, giving the robot obstacles to account for while navigating between the designated points.",
+        ],
+      },
+      {
+        id: "features",
+        title: "Navigation features",
+        paragraphs: ["The system combines spatial navigation with visual cues:"],
+        bullets: [
+          "LiDAR-based SLAM to build a map of the environment.",
+          "AMCL localization to estimate the robot's pose within a saved map.",
+          "Occupancy-grid path planning with costmaps and obstacle inflation layers.",
+          "Local navigation that uses LiDAR observations to respond to obstacles.",
+          "Camera-based visual recognition that identifies start, middle, and end markers and triggers corresponding actions.",
+        ],
+      },
+      {
+        id: "contribution",
+        title: "My contribution",
+        paragraphs: [
+          "My work covered mapping, visual recognition, and navigation. I worked on representing the environment as a map, recognizing the visual cues used along the route, and connecting those cues with the robot's navigation behavior.",
+          "These areas brought together map creation and reuse, localization, path planning, and image-triggered actions. The task required the robot to interpret both its position in the environment and the visual markers associated with each stage of the route.",
+        ],
+      },
+      {
+        id: "architecture",
+        title: "Technical architecture",
+        paragraphs: [
+          "The ROS launch configuration brings up robot and sensor drivers, mapping and move_base navigation, RViz visualization, and the visual recognition and robot-action nodes. The occupancy map represents free, occupied, and unknown areas, while costmap layers give the planner clearance around obstacles.",
+          "The C++ action node receives recognized object identifiers through /objects and publishes geometry_msgs::Twist velocity commands to /cmd_vel. Recognizing the start marker produces arrival feedback, the middle marker triggers a turn, and the end marker stops the robot and reports that the endpoint has been reached.",
+        ],
+      },
+      {
+        id: "results",
+        title: "Demonstration and observations",
+        paragraphs: [
+          "The report documents the laboratory setup, the RViz occupancy map, and a trajectory connecting the designated route points. The map and trajectory illustrate how the robot's route relates to the surrounding obstacles and workstations.",
+          "Navigation uses LiDAR for mapping and obstacle observations, AMCL for localization in the map, and the RGB-D camera for recognizing visual goals. Combining these inputs lets the project associate a navigation stage with a specific robot action.",
+        ],
+      },
+      {
+        id: "learning",
+        title: "Learning and integration",
+        paragraphs: [
+          "The project developed my understanding of how SLAM, localization, path planning, and visual recognition fit together in a robot navigation system. Saving and reloading maps also made it possible to reuse the mapped environment for later navigation.",
+          "A central integration task was connecting taught visual images to the appropriate behavior at the start, middle, and end of the route. This linked perception outputs with motion commands and made the navigation task depend on both spatial and visual information.",
         ],
       },
     ],
