@@ -151,4 +151,72 @@ export const projects: Project[] = [
       },
     ],
   },
+  {
+    slug: "tic-tac-toe-ai",
+    title: "Tic-Tac-Toe with Minimax AI",
+    description:
+      "Co-developed a Tic-Tac-Toe game in C with a GTK4 interface, local two-player mode, and AI difficulty settings. My contribution focused on the perfect Minimax opponent, using recursive game-tree search to select optimal moves.",
+    technologies: ["C", "GTK4", "Minimax", "GCC", "CMake", "MSYS2"],
+    facts: [
+      { label: "Type", value: "Academic team project" },
+      { label: "Team", value: "4 contributors" },
+      { label: "Course", value: "CSC1103 Programming Methodology" },
+      { label: "Year", value: "2025" },
+      { label: "My role", value: "Perfect Minimax AI" },
+    ],
+    sections: [
+      {
+        id: "overview",
+        title: "Project overview",
+        paragraphs: [
+          "This project was developed for a brief from a nursery childcare organization: create an accessible 3-by-3 Tic-Tac-Toe game that supports children's motor skills, analytical thinking, and social interaction. The design considered the memory, processing, and power constraints of an IoT tablet.",
+          "The team built the game in C with a GTK4 graphical interface. It supports local two-player games and single-player games against an AI, with difficulty settings to provide different levels of challenge.",
+        ],
+      },
+      {
+        id: "features",
+        title: "Game features",
+        paragraphs: ["The game combines familiar rules with selectable AI behavior:"],
+        bullets: [
+          "A graphical 3-by-3 board with X and O symbols, turn handling, and win or draw feedback.",
+          "Local two-player mode for two people sharing the same device.",
+          "Single-player mode with a perfect Minimax opponent and less challenging AI options.",
+          "Move validation and win detection across rows, columns, and diagonals.",
+          "A modular structure separating the interface, game state, and AI decision logic.",
+        ],
+      },
+      {
+        id: "contribution",
+        title: "My contribution",
+        paragraphs: [
+          "I implemented the perfect Minimax AI. The algorithm recursively explores legal future board states, alternating between the AI's best response and the human player's best response to evaluate each candidate move.",
+          "Terminal positions receive scores for an AI win, a human win, or a draw. Depth-adjusted scoring favors faster wins and delays unavoidable losses. After evaluating a simulated move, the algorithm restores the board so the next candidate starts from the correct game state.",
+        ],
+      },
+      {
+        id: "architecture",
+        title: "Technical architecture",
+        paragraphs: [
+          "The main module coordinates player input, board updates, AI turns, and interface feedback. The game state stores the board, current player, selected mode, and GTK widgets. The AI module evaluates that board and returns a move for the controller to apply.",
+          "The project compares full Minimax search with an imperfect depth-limited variant and explores a linear-regression-based opponent. GCC, MSYS2, and CMake were used in the Windows build workflow.",
+        ],
+      },
+      {
+        id: "evaluation",
+        title: "Evaluation and results",
+        paragraphs: [
+          "In the report's ten-game hard-mode trial, the Minimax opponent recorded one win, nine draws, and no human wins.",
+          "The evaluation also compared response time, search depth, and the number of game states explored. Full search examined tens of thousands of states, while the depth-limited variant examined substantially fewer. Memory usage was discussed using search behavior and recursion depth; it was not measured directly.",
+        ],
+      },
+      {
+        id: "learning",
+        title: "Challenges and learning",
+        paragraphs: [
+          "The project connected recursive algorithms with an interactive application. Implementing Minimax required careful handling of terminal states, turn alternation, and board restoration during search.",
+          "Comparing difficulty levels also highlighted a design trade-off: a strategically strong opponent is useful for a challenge, while a deliberately imperfect opponent can make the game more approachable for beginners. Search depth provides one way to adjust both difficulty and computation.",
+        ],
+      },
+    ],
+  },
 ];
